@@ -1,0 +1,1404 @@
+{
+  "entry": "11696",
+  "last_updated": "2023-05-23",
+  "number_of_revisions": "7",
+  "histories": [
+    {
+      "x4_code": "(19760730T)",
+      "free_txt": [
+        " Translated from SCISRS"
+      ]
+    },
+    {
+      "x4_code": "(19831011A)",
+      "free_txt": [
+        " Converted to reaction formalism"
+      ]
+    },
+    {
+      "x4_code": "(20120225U)",
+      "free_txt": [
+        " On. Upper to lower cases, 4 digits year"
+      ]
+    },
+    {
+      "x4_code": "(20160807U)",
+      "free_txt": [
+        " OS. Corr.in DECAY-DATA in sub.12"
+      ]
+    },
+    {
+      "x4_code": "(20210622A)",
+      "free_txt": [
+        " OS. REACTION modified in sub. 19"
+      ]
+    }
+  ],
+  "bib_record": {
+    "title": "Activation cross sections of Fe and Ni isotopes for 14.5 MeV neutrons",
+    "authors": [
+      {
+        "name": "W.G.Cross"
+      },
+      {
+        "name": "R.L.Clarke"
+      },
+      {
+        "name": "K.Morin"
+      },
+      {
+        "name": "G.Slinn"
+      },
+      {
+        "name": "N.M.Ahmed"
+      },
+      {
+        "name": "K.Beg"
+      }
+    ],
+    "institutes": [
+      {
+        "x4_code": "(1CANCRC)",
+        "free_txt": []
+      }
+    ],
+    "references": [
+      {
+        "x4_code": "(P,EANDC(CAN)-16,1,1963)",
+        "free_txt": [],
+        "publication_year": "1963",
+        "doi": null,
+        "pointer": "0"
+      },
+      {
+        "x4_code": "(P,PR-P-53,7,1962)",
+        "free_txt": [
+          " Excitation functions"
+        ],
+        "publication_year": "1962",
+        "doi": null,
+        "pointer": "0"
+      },
+      {
+        "x4_code": "(J,BAP,7,335(TA14),1962)",
+        "free_txt": [
+          " Data superseded"
+        ],
+        "publication_year": "1962",
+        "doi": null,
+        "pointer": "0"
+      }
+    ],
+    "facilities": []
+  },
+  "reactions": {
+    "002": {
+      "0": {
+        "x4_code": "(26-FE-54(N,2N)26-FE-53,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-54",
+              [
+                "N,2N"
+              ],
+              "26-FE-53,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-54",
+            "process": "N,2N",
+            "sf49": "26-FE-53,,SIG",
+            "sf4": "26-FE-53",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "003": {
+      "0": {
+        "x4_code": "(26-FE-54(N,A)24-CR-51,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-54",
+              [
+                "N,A"
+              ],
+              "24-CR-51,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-54",
+            "process": "N,A",
+            "sf49": "24-CR-51,,SIG",
+            "sf4": "24-CR-51",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "004": {
+      "0": {
+        "x4_code": "(26-FE-54(N,P)25-MN-54,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-54",
+              [
+                "N,P"
+              ],
+              "25-MN-54,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-54",
+            "process": "N,P",
+            "sf49": "25-MN-54,,SIG",
+            "sf4": "25-MN-54",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "005": {
+      "0": {
+        "x4_code": "(26-FE-54(N,A)24-CR-51,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-54",
+              [
+                "N,A"
+              ],
+              "24-CR-51,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-54",
+            "process": "N,A",
+            "sf49": "24-CR-51,,SIG",
+            "sf4": "24-CR-51",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "006": {
+      "0": {
+        "x4_code": "(26-FE-54(N,P)25-MN-54,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-54",
+              [
+                "N,P"
+              ],
+              "25-MN-54,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-54",
+            "process": "N,P",
+            "sf49": "25-MN-54,,SIG",
+            "sf4": "25-MN-54",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "007": {
+      "0": {
+        "x4_code": "(26-FE-56(N,P)25-MN-56,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-56",
+              [
+                "N,P"
+              ],
+              "25-MN-56,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-56",
+            "process": "N,P",
+            "sf49": "25-MN-56,,SIG",
+            "sf4": "25-MN-56",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "008": {
+      "0": {
+        "x4_code": "(26-FE-57(N,P)25-MN-57,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-57",
+              [
+                "N,P"
+              ],
+              "25-MN-57,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-57",
+            "process": "N,P",
+            "sf49": "25-MN-57,,SIG",
+            "sf4": "25-MN-57",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "009": {
+      "0": {
+        "x4_code": "(26-FE-56(N,P)25-MN-56,,SIG)",
+        "children": [
+          {
+            "code": [
+              "26-FE-56",
+              [
+                "N,P"
+              ],
+              "25-MN-56,,SIG"
+            ],
+            "type": null,
+            "target": "26-FE-56",
+            "process": "N,P",
+            "sf49": "25-MN-56,,SIG",
+            "sf4": "25-MN-56",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "010": {
+      "0": {
+        "x4_code": "(28-NI-58(N,X)27-CO-57,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,X"
+              ],
+              "27-CO-57,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,X",
+            "sf49": "27-CO-57,,SIG",
+            "sf4": "27-CO-57",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "011": {
+      "0": {
+        "x4_code": "(28-NI-58(N,P)27-CO-58,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,P"
+              ],
+              "27-CO-58,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,P",
+            "sf49": "27-CO-58,,SIG",
+            "sf4": "27-CO-58",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "012": {
+      "0": {
+        "x4_code": "(28-NI-58(N,P)27-CO-58-M,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,P"
+              ],
+              "27-CO-58-M,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,P",
+            "sf49": "27-CO-58-M,,SIG",
+            "sf4": "27-CO-58-M",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "013": {
+      "0": {
+        "x4_code": "(28-NI-58(N,P)27-CO-58,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,P"
+              ],
+              "27-CO-58,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,P",
+            "sf49": "27-CO-58,,SIG",
+            "sf4": "27-CO-58",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "014": {
+      "0": {
+        "x4_code": "(28-NI-58(N,2N)28-NI-57,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,2N"
+              ],
+              "28-NI-57,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,2N",
+            "sf49": "28-NI-57,,SIG",
+            "sf4": "28-NI-57",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "015": {
+      "0": {
+        "x4_code": "(28-NI-58(N,X)27-CO-57,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-58",
+              [
+                "N,X"
+              ],
+              "27-CO-57,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-58",
+            "process": "N,X",
+            "sf49": "27-CO-57,,SIG",
+            "sf4": "27-CO-57",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "016": {
+      "0": {
+        "x4_code": "(28-NI-60(N,P)27-CO-60,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-60",
+              [
+                "N,P"
+              ],
+              "27-CO-60,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-60",
+            "process": "N,P",
+            "sf49": "27-CO-60,,SIG",
+            "sf4": "27-CO-60",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "017": {
+      "0": {
+        "x4_code": "(28-NI-61(N,P)27-CO-61,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-61",
+              [
+                "N,P"
+              ],
+              "27-CO-61,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-61",
+            "process": "N,P",
+            "sf49": "27-CO-61,,SIG",
+            "sf4": "27-CO-61",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "018": {
+      "0": {
+        "x4_code": "(28-NI-62(N,P)27-CO-62,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-62",
+              [
+                "N,P"
+              ],
+              "27-CO-62,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-62",
+            "process": "N,P",
+            "sf49": "27-CO-62,,SIG",
+            "sf4": "27-CO-62",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "019": {
+      "0": {
+        "x4_code": "(28-NI-62(N,X)27-CO-61,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-62",
+              [
+                "N,X"
+              ],
+              "27-CO-61,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-62",
+            "process": "N,X",
+            "sf49": "27-CO-61,,SIG",
+            "sf4": "27-CO-61",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    },
+    "020": {
+      "0": {
+        "x4_code": "(28-NI-62(N,P)27-CO-62-M,,SIG)",
+        "children": [
+          {
+            "code": [
+              "28-NI-62",
+              [
+                "N,P"
+              ],
+              "27-CO-62-M,,SIG"
+            ],
+            "type": null,
+            "target": "28-NI-62",
+            "process": "N,P",
+            "sf49": "27-CO-62-M,,SIG",
+            "sf4": "27-CO-62-M",
+            "sf5": null,
+            "sf6": "SIG",
+            "sf7": null,
+            "sf8": null,
+            "sf9": null
+          }
+        ],
+        "type": null,
+        "free_text": "",
+        "pointer": "0"
+      }
+    }
+  },
+  "data_tables": {
+    "001": {
+      "common": {
+        "heads": [
+          "EN-NRM",
+          "MONIT"
+        ],
+        "units": [
+          "MEV",
+          "MB"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            115.0
+          ]
+        ]
+      }
+    },
+    "002": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.0085
+          ],
+          [
+            0.0008
+          ]
+        ]
+      }
+    },
+    "003": {
+      "common": {
+        "heads": [
+          "DATA-ERR1",
+          "DATA-ERR2"
+        ],
+        "units": [
+          "PER-CENT",
+          "PER-CENT"
+        ],
+        "data": [
+          [
+            10.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "data": {
+        "heads": [
+          "EN",
+          "DATA"
+        ],
+        "units": [
+          "MEV",
+          "MB"
+        ],
+        "data": [
+          [
+            13.58,
+            14.07,
+            14.73
+          ],
+          [
+            87.0,
+            94.0,
+            96.0
+          ]
+        ]
+      }
+    },
+    "004": {
+      "common": {
+        "heads": [
+          "DATA-ERR1",
+          "DATA-ERR2"
+        ],
+        "units": [
+          "PER-CENT",
+          "PER-CENT"
+        ],
+        "data": [
+          [
+            10.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "data": {
+        "heads": [
+          "EN",
+          "DATA"
+        ],
+        "units": [
+          "MEV",
+          "MB"
+        ],
+        "data": [
+          [
+            13.58,
+            14.07,
+            14.73
+          ],
+          [
+            370.0,
+            346.0,
+            320.0
+          ]
+        ]
+      }
+    },
+    "005": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.094
+          ],
+          [
+            0.01
+          ]
+        ]
+      }
+    },
+    "006": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.318
+          ],
+          [
+            0.03
+          ]
+        ]
+      }
+    },
+    "007": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.107
+          ],
+          [
+            0.008
+          ]
+        ]
+      }
+    },
+    "008": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.075
+          ],
+          [
+            0.008
+          ]
+        ]
+      }
+    },
+    "009": {
+      "common": {
+        "heads": [
+          "DATA-ERR1",
+          "DATA-ERR2"
+        ],
+        "units": [
+          "PER-CENT",
+          "PER-CENT"
+        ],
+        "data": [
+          [
+            10.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "data": {
+        "heads": [
+          "EN",
+          "DATA"
+        ],
+        "units": [
+          "MEV",
+          "MB"
+        ],
+        "data": [
+          [
+            13.78,
+            14.07,
+            14.73
+          ],
+          [
+            106.0,
+            108.0,
+            100.0
+          ]
+        ]
+      }
+    },
+    "010": {
+      "common": {
+        "heads": [
+          "DATA-ERR1",
+          "DATA-ERR2"
+        ],
+        "units": [
+          "PER-CENT",
+          "PER-CENT"
+        ],
+        "data": [
+          [
+            10.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "data": null
+    },
+    "011": {
+      "common": {
+        "heads": [
+          "DATA-ERR1",
+          "DATA-ERR2"
+        ],
+        "units": [
+          "PER-CENT",
+          "PER-CENT"
+        ],
+        "data": [
+          [
+            10.0
+          ],
+          [
+            3.0
+          ]
+        ]
+      },
+      "data": {
+        "heads": [
+          "EN",
+          "DATA"
+        ],
+        "units": [
+          "MEV",
+          "MB"
+        ],
+        "data": [
+          [
+            13.58,
+            14.07,
+            14.73
+          ],
+          [
+            410.0,
+            366.0,
+            315.0
+          ]
+        ]
+      }
+    },
+    "012": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.164
+          ],
+          [
+            0.016
+          ]
+        ]
+      }
+    },
+    "013": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.335
+          ],
+          [
+            0.02
+          ]
+        ]
+      }
+    },
+    "014": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.035
+          ],
+          [
+            0.004
+          ]
+        ]
+      }
+    },
+    "015": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.665
+          ],
+          [
+            0.06
+          ]
+        ]
+      }
+    },
+    "016": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.16
+          ],
+          [
+            0.02
+          ]
+        ]
+      }
+    },
+    "017": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.083
+          ],
+          [
+            0.008
+          ]
+        ]
+      }
+    },
+    "018": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.039
+          ],
+          [
+            0.006
+          ]
+        ]
+      }
+    },
+    "019": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.0044
+          ],
+          [
+            0.001
+          ]
+        ]
+      }
+    },
+    "020": {
+      "common": null,
+      "data": {
+        "heads": [
+          "EN",
+          "DATA-MIN",
+          "DATA-ERR"
+        ],
+        "units": [
+          "MEV",
+          "B",
+          "B"
+        ],
+        "data": [
+          [
+            14.5
+          ],
+          [
+            0.015
+          ],
+          [
+            0.003
+          ]
+        ]
+      }
+    }
+  },
+  "experimental_conditions": {
+    "001": {
+      "0": {
+        "method": [
+          {
+            "x4_code": "(ACTIV)",
+            "free_txt": []
+          }
+        ],
+        "monitor": [
+          {
+            "x4_code": "(13-AL-27(N,A)11-NA-24,,SIG)",
+            "free_txt": []
+          }
+        ],
+        "status": [
+          {
+            "x4_code": "(SCSRS)",
+            "free_txt": []
+          }
+        ]
+      }
+    },
+    "002": {},
+    "003": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR1)",
+            "free_txt": [
+              " ABSOLUTE ERROR"
+            ]
+          },
+          {
+            "x4_code": "(DATA-ERR2)",
+            "free_txt": [
+              " RELATIVE ERROR"
+            ]
+          }
+        ]
+      }
+    },
+    "004": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR1)",
+            "free_txt": [
+              " ABSOLUTE ERROR"
+            ]
+          },
+          {
+            "x4_code": "(DATA-ERR2)",
+            "free_txt": [
+              " RELATIVE ERROR"
+            ]
+          }
+        ]
+      }
+    },
+    "005": {},
+    "006": {},
+    "007": {},
+    "008": {},
+    "009": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR1)",
+            "free_txt": [
+              " ABSOLUTE ERROR"
+            ]
+          },
+          {
+            "x4_code": "(DATA-ERR2)",
+            "free_txt": [
+              " RELATIVE ERROR"
+            ]
+          }
+        ]
+      }
+    },
+    "010": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR1)",
+            "free_txt": [
+              " Absolute error"
+            ]
+          },
+          {
+            "x4_code": "(DATA-ERR2)",
+            "free_txt": [
+              " Relative error"
+            ]
+          }
+        ],
+        "status": [
+          {
+            "x4_code": "(SPSDD,11696015)",
+            "free_txt": []
+          }
+        ]
+      }
+    },
+    "011": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR1)",
+            "free_txt": [
+              " ABSOLUTE ERROR"
+            ]
+          },
+          {
+            "x4_code": "(DATA-ERR2)",
+            "free_txt": [
+              " RELATIVE ERROR"
+            ]
+          }
+        ]
+      }
+    },
+    "012": {
+      "0": {
+        "decay-data": [
+          {
+            "x4_code": "(27-CO-58-M,9.HR)",
+            "free_txt": []
+          }
+        ],
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR)",
+            "free_txt": [
+              " No information on sources of uncertainties"
+            ]
+          }
+        ]
+      }
+    },
+    "013": {},
+    "014": {},
+    "015": {
+      "0": {
+        "status": [
+          {
+            "x4_code": "(TABLE)",
+            "free_txt": [
+              " Text (p2) of EANDC(CAN)-16, p1 (1963)"
+            ]
+          }
+        ]
+      }
+    },
+    "016": {},
+    "017": {},
+    "018": {},
+    "019": {
+      "0": {
+        "err-analys": [
+          {
+            "x4_code": "(DATA-ERR)",
+            "free_txt": [
+              " No information on sources of uncertainties"
+            ]
+          }
+        ]
+      }
+    },
+    "020": {
+      "0": {
+        "decay-data": [
+          {
+            "x4_code": "(28-NI-63,1.9MIN)",
+            "free_txt": []
+          }
+        ]
+      }
+    }
+  }
+}

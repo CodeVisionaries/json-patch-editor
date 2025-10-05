@@ -1,0 +1,645 @@
+<!DOCTYPE html> <meta charset="UTF-8" />
+<title>Prototypoe of a Patch-Based Visual JSON Editor</title>
+<style>
+  body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  svg {
+    border: 1px solid #ccc;
+  }
+  .node circle {
+    cursor: pointer;
+  }
+  .node text {
+    fill: black;
+    font-weight: bold;
+    pointer-events: none;
+    user-select: none;
+  }
+  // More specific style to allow for
+  // dynamic changes of value text color
+  // .primitive-value {
+  //   fill: black !important;
+  //   font-size: 0.7em;
+  //   font-weight: normal;
+  // }
+  .label {
+    fill: black;
+    font-weight: normal;
+    pointer-events: none;
+    user-select: none;
+  }
+  line {
+    stroke: #999;
+    stroke-width: 1px;
+  }
+  .input-box {
+    background: #f0f0f0;
+    padding: 6px 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+    cursor: grab;
+    user-select: none;
+  }
+  .input-box:active {
+    cursor: grabbing;
+  }
+  #bound-inputs .input-box {
+    cursor: pointer;
+  }
+  .json-pointer {
+    font-size: 0.7em;
+    color: #555;
+    margin-top: 2px;
+  }
+</style>
+<body>
+
+<!-- Vertical arrangement of main layout and patch-output afterwars -->
+<div style="display: flex; flex-direction: column; padding: 0px; gap: 20px;">
+
+  <!-- Main layout: horizontal split between left panel and viewer -->
+  <div style="display: flex; gap: 30px; padding: 20px; align-items: flex-start;">
+
+    <!-- Left column -->
+    <div id="left-panel" style="width: 250px; display: flex; flex-direction: column; gap: 20px;">
+
+      <div style="margin-bottom: 10px;">
+        <label for="function-select"><strong>Select Function:</strong></label>
+        <select id="function-select">
+          <option value="scale-array" selected>scale-array</option>
+          <option value="interpolated-scale">interpolated-scale</option>
+          <option value="interpolated-inv-scale">interpolated-inv-scale</option>
+          <option value="add">add</option>
+          <option value="remove">remove</option>
+          <option value="replace">replace</option>
+          <option value="copy">copy</option>
+        </select>
+      </div>
+
+      <div id="inputs-container">
+        <div id="inputs">
+          <strong>Function Inputs</strong>
+          <div class="input-box" draggable="true" data-input="array">array</div>
+          <div class="input-box" draggable="true" data-input="factor">factor</div>
+          <div class="input-box" draggable="true" data-input="out">out</div>
+        </div>
+      </div>
+
+      <div id="bound-inputs">
+        <strong>Bound Inputs</strong>
+      </div>
+
+      <div id="editor-box" class="input-box" style="cursor: pointer;">
+        <strong>Direct Value Editor</strong>
+        <div id="editor-label" style="margin: 6px 0; font-style: italic;">(Drop an input here)</div>
+        <input type="text" id="editor-input" style="width: 95%; padding: 6px;" disabled />
+        <button id="editor-bind" disabled style="margin-top: 6px;">Bind</button>
+      </div>
+
+      <div id="apply-box">
+        <button id="apply-button">Apply function</button>
+      </div>
+
+    </div>
+
+    <!-- Right column -->
+    <div style="flex: 1;">
+      <div id="current-path" style="margin-bottom: 10px; font-weight: bold; font-size: 20px; font-family: monospace;">
+        /
+      </div>
+      <svg width="800" height="600" id="json-viewer"></svg>
+    </div>
+
+  </div>
+
+  <div>
+  <pre id="patch-output">(empty patch)</pre>
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+  const svg = d3.select("svg");
+  const width = +svg.attr("width");
+  const height = +svg.attr("height");
+
+  const mainGroup = svg.append("g")
+    .attr("class", "main-group")
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  const zoom = d3.zoom()
+    .on("zoom", (event) => {
+      mainGroup.attr("transform", event.transform);
+    });
+
+  svg.call(zoom);
+
+  const centerX = width / 2;
+  const centerY = height / 2;
+  // const radius = 200;
+
+  let jsonData = {};
+  let historyStack = [];
+
+  // Sample nested JSON object
+
+  const params = new URLSearchParams(window.location.search);
+  const jsonFile = params.get('file');
+  const fileToLoad = jsonFile || 'nuclear-data/n-014_Si_031.json';
+
+  fetch(fileToLoad)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+        console.log("Loaded JSON:", data);
+        jsonData = data;
+        historyStack = [{node: jsonData, key: null}];
+        render(historyStack[0]);
+    })
+    .catch(error => {
+      console.error('Error loading JSON:', error);
+    });
+
+  function isContainer(obj) {
+    return obj && typeof obj === 'object';
+  }
+
+  function render(currentEntry) {
+    mainGroup.selectAll("*").remove();
+
+    const pathLabel = document.getElementById("current-path");
+    pathLabel.textContent = makePointerFromStack(historyStack);
+
+    const nodeData = currentEntry.node;
+    const currentKey = currentEntry.key;
+
+    // Get keys of current object (children)
+    let allKeys = Object.keys(nodeData);
+    if (Array.isArray(nodeData)) {
+      allKeys = allKeys.sort((a, b) => Number(a) - Number(b));
+    }
+
+    if (allKeys.length === 0) {
+      // No children, show a hint
+      mainGroup.append("text")
+        .attr("x", centerX)
+        .attr("y", centerY + 80)
+        .attr("text-anchor", "middle")
+        .text("(no child objects)");
+    }
+
+    // --- Parameters ---
+    const nodeRadius = 40;
+    const ringSpacing = 30; // space between rings
+    const baseRadius = 120; // radius of first ring
+
+    // Compute positions in concentric rings
+    const childrenPos = [];
+
+    let ringIndex = 0;
+    let placed = 0;
+    let remaining = allKeys.length;
+    let keyIndex = 0;
+
+    while (remaining > 0) {
+      const r = baseRadius + ringIndex * (2 * nodeRadius + ringSpacing);
+      const circumference = 2 * Math.PI * r;
+      const maxNodesThisRing = Math.floor(circumference / (2 * nodeRadius + 10));
+
+      const nodesThisRing = Math.min(maxNodesThisRing, remaining);
+      const angleStep = 2 * Math.PI / nodesThisRing;
+      const angleOffset = ringIndex % 2 === 0 ? 0 : angleStep / 2; // offset outer rings
+
+      for (let i = 0; i < nodesThisRing; i++) {
+        const angle = i * angleStep + angleOffset - Math.PI / 2;
+        const key = allKeys[keyIndex++];
+        childrenPos.push({
+          key,
+          x: centerX + r * Math.cos(angle),
+          y: centerY + r * Math.sin(angle),
+          angle,
+          isContainer: isContainer(nodeData[key])
+        });
+      }
+
+      remaining -= nodesThisRing;
+      ringIndex++;
+    }
+
+    mainGroup.selectAll("*").remove();
+
+    // Draw lines connecting center to children
+    mainGroup.selectAll("line")
+      .data(childrenPos)
+      .enter()
+      .append("line")
+      .attr("x1", centerX)
+      .attr("y1", centerY)
+      .attr("x2", d => d.x)
+      .attr("y2", d => d.y)
+      .attr("stroke", "#999")
+      .attr("stroke-width", 2);
+
+    // Center node group
+    const centerGroup = mainGroup.append("g")
+      .attr("class", "node")
+      .attr("transform", `translate(${centerX},${centerY})`)
+      .style("cursor", historyStack.length > 1 ? "pointer" : "default")
+      .on("click", () => {
+        if (historyStack.length > 1) {
+          historyStack.pop(); // go one level up
+          render(historyStack[historyStack.length - 1]);
+        }
+      });
+
+    centerGroup.append("circle")
+      .attr("r", 50)
+      .attr("fill", "#a6c8ff");
+
+    centerGroup.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", "0.35em")
+      .text(currentKey === null ? "root" : currentKey);
+
+
+    // Draw children nodes
+    const childGroups = mainGroup.selectAll(".child-node")
+      .data(childrenPos)
+      .enter()
+      .append("g")
+      .attr("class", "node child-node")
+      .attr("transform", d => `translate(${d.x},${d.y})`)
+      .style("cursor", "pointer")
+      .on("click", (event, d) => {
+
+        if ( ! d.isContainer) {
+            event.stopPropagation();
+            return; // primitives are not cliclable
+        }
+
+        // Zoom into clicked child
+        historyStack.push({ node: nodeData[d.key], key: d.key });
+
+        render(historyStack[historyStack.length - 1]);
+
+        const targetX = centerX;
+        const targetY = centerY;
+
+        const viewX = width / 2;
+        const viewY = height / 2;
+
+        const currentTransform = d3.zoomTransform(svg.node());
+        const scale = currentTransform.k;
+
+        const dx = viewX - targetX * scale;
+        const dy = viewY - targetY * scale;
+
+        const newTransform = d3.zoomIdentity
+          .translate(dx, dy)
+          .scale(scale);
+
+        svg.transition()
+          .duration(500)
+          .call(zoom.transform, newTransform);
+
+        event.stopPropagation(); // prevent center click
+      })
+      .on('dragover', (event, d) => {
+        event.preventDefault();
+      })
+      .on('drop', (event, d) => {
+        event.preventDefault();
+        const inputName = event.dataTransfer.getData('text/plain');
+        const pointer = makePointerFromStack(historyStack, d.key);
+
+        if (inputBindings[inputName]) {
+          alert(`Input "${inputName}" is already bound. Remove it first.`);
+          return;
+        }
+
+        inputBindings[inputName] = {
+          type: "pointer",
+          value: pointer
+        };
+
+        // remove the input box from the available inputs
+        const inputEl = inputsContainer.querySelector(
+          `.input-box[data-input="${inputName}"]`
+        );
+        if (inputEl) inputEl.remove();
+
+        updateBoundInputsDisplay();
+        render(historyStack[historyStack.length - 1]);
+
+      });
+
+    childGroups.append("circle")
+      .attr("r", 40)
+      .attr("fill", d => d.isContainer ? "#c3e4f7" : "#d6d6d6");
+
+    childGroups.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", "0.35em")
+      .attr("fill", d => d.isContainer ? "black" : "#333")
+      .text(d => Array.isArray(nodeData) ? `[${d.key}]` : d.key);
+
+    childGroups
+      .filter(d => !d.isContainer)
+      .append("text")
+      .attr("class", "primitive-value")
+      .attr("text-anchor", "middle")
+      .attr("dy", "2em")
+      .attr("fill", "black")
+      .attr("font-size", "0.6em")
+      .text(d => {
+        const value = nodeData[d.key];
+        return typeof value === 'string' && value.length > 20
+          ? value.slice(0, 17) + '...'   // truncate long strings
+          : String(value);
+      });
+
+    // Add the bound inputs to the svg nodes
+    childGroups.each(function(d) {
+      const group = d3.select(this);
+      const pointer = makePointerFromStack(historyStack, d.key);
+      const bindings = getBindingsForPointer(pointer);
+
+      if (bindings.length > 0) {
+        const labelGroup = group.append('g')
+          .attr('class', 'bindings-labels')
+          .attr('transform', 'translate(0, 20)');
+
+        const labelEnter = labelGroup.selectAll('.binding-label-group')
+          .data(bindings)
+          .enter()
+          .append("g")
+          .attr('class', 'binding-label-group')
+          .attr('transform', (d, i) => `translate(0, ${i * 20})`) // space between labels
+          .style('cursor', 'pointer')
+          .on('click', (event, inputName) => {
+            delete inputBindings[inputName];
+            updateBoundInputsDisplay();
+            restoreInputToAvailable(inputName);
+            render(historyStack[historyStack.length - 1]);
+            event.stopPropagation();
+          });
+
+        labelEnter.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .attr('fill', 'white')
+          .text(d => d)
+          .each(function(d) {
+            const textWidth = this.getBBox().width
+            const padding = 5;
+
+            // Add a rectangle behind the text
+            d3.select(this.parentNode) // go back to the group
+              .insert('rect', 'text')  // insert before the text
+              .attr('x', -textWidth / 2 - padding)
+              .attr('y', -10)
+              .attr('width', textWidth + 2 * padding)
+              .attr('height', 18)
+              .attr('rx', 4)
+              .attr('fill', '#4a90e2');
+          });
+      }
+
+    });
+
+    // Show hint for center node click if possible
+    if (historyStack.length > 1) {
+      mainGroup.append("text")
+        .attr("x", centerX)
+        .attr("y", centerY - 55)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#555")
+        .attr("font-style", "italic")
+        .attr("font-size", 12)
+        .text("Click center to go up");
+    }
+  }
+
+  // render(historyStack[0]);
+
+  // Added logic for allowed visually binding the function arguments
+  // to the JSON pointer nodes in the svg pane
+
+  const inputsContainer = document.getElementById('inputs');
+  const boundInputsContainer = document.getElementById('bound-inputs');
+
+  const functionInputsMap = {
+    "scale-array": ['arr', 'factor', 'out'],
+    "interpolated-scale": ['scale-x', 'scale-y', 'x', 'y', 'out'],
+    "interpolated-inv-scale": ['inv-scale-x', 'inv-scale-y', 'x', 'y', 'out'],
+    "add": ['path', 'value'],
+    "remove": ['path'],
+    "replace": ['path', 'value'],
+    "copy": ['from', 'path']
+  };
+
+
+  let currentFunction = 'scale';
+  let inputBindings = {}
+  let directInputTarget = null; // current input name currently being edited
+
+  function makeInputDraggable(inputEl) {
+    inputEl.setAttribute('draggable', 'true');
+    inputEl.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', inputEl.dataset.input);
+    });
+  }
+
+  const funcSelect = document.getElementById('function-select').addEventListener('change', (e) => {
+    currentFunction = e.target.value;
+ 
+    inputBindings = {}
+
+    // Refresh UI
+    updateFunctionInputsDisplay();
+    updateBoundInputsDisplay();
+    render(historyStack[historyStack.length - 1]);
+  });
+
+  const patchOpList = [];
+
+  const prePatchOutput = document.getElementById('patch-output');
+  const applyButton = document.getElementById('apply-button')
+    .addEventListener('click', e => {
+      // transform the inputBindings for proper patch op
+      const isStandardOp = ['add', 'remove', 'replace', 'copy', 'test'].includes(currentFunction);
+      const newPatchOp = Object.entries(inputBindings).reduce((acc, [key, value]) => {
+        if (isStandardOp && ['from', 'path'].includes(key)) {
+          acc[key] = value.value;
+          return acc;
+        }
+        let newkey = key;
+        if (value.type === 'pointer') newkey = key + '-path';
+        acc[newkey] = value.value;
+        return acc;
+      }, {op: currentFunction});
+
+      // upate patch op list and output
+      patchOpList.push(newPatchOp);
+      updatePatchOutput();
+
+      // remove all established bindings after saved to patch op list
+      inputBindings = {}
+      // Refresh UI
+      updateFunctionInputsDisplay();
+      updateBoundInputsDisplay();
+      render(historyStack[historyStack.length - 1]);
+      e.stopPropagation();
+    });
+
+  const editorBox = document.getElementById("editor-box");
+  const editorLabel = document.getElementById("editor-label");
+  const editorInput = document.getElementById("editor-input");
+  const editorApply = document.getElementById("editor-bind");
+
+  // enable dropping input into the editor
+  editorBox.addEventListener('dragover', event => {
+    event.preventDefault();
+  });
+
+  editorBox.addEventListener('drop', event => {
+    event.preventDefault();
+    const inputName = event.dataTransfer.getData('text/plain');
+
+    if (inputBindings[inputName]) {
+      alert(`Input "${inputName}" is already bound to a pointer or value. Remove it first.`);
+      return;
+    }
+
+    directInputTarget = inputName;
+    editorLabel.textContent = `Editing: ${inputName}`;
+    editorInput.disabled = false;
+    editorInput.value = '';
+    editorApply.disabled = false;
+  });
+
+  // Handle the apply button
+  editorApply.addEventListener('click', () => {
+    if (!directInputTarget) return;
+
+    const val = editorInput.value;
+
+    if (val.trim() === '') {
+      alert("Please enter a value.");
+      return;
+    }
+
+    // TODO: add type parsing (number, boolean, etc.)
+    inputBindings[directInputTarget] = {
+      type: "value",
+      value: val
+    }; //disinguish from pointer
+
+    // remove input from available list (same as in node binding)
+    const inputEl = inputsContainer.querySelector(
+        `.input-box[data-input="${directInputTarget}"]`
+    );
+    if (inputEl) inputEl.remove();
+
+    updateBoundInputsDisplay();
+    directInputTarget = null;
+    editorLabel.textContent = `(Drop an input here)`;
+    editorInput.value = '';
+    editorInput.disabled = true;
+    editorApply.disabled = true;
+  });
+ 
+  inputsContainer.querySelectorAll('.input-box').forEach(makeInputDraggable);
+
+  function makePointerFromStack(stack, key) {
+    const pointer = stack.slice(1).map(entry => entry.key).concat(key)
+      .filter(k => k !== null);
+    return '/' + pointer.join('/'); 
+  }
+
+  function updateBoundInputsDisplay() {
+    boundInputsContainer.innerHTML = '<strong>Bound Inputs</strong>';
+
+    Object.entries(inputBindings).forEach(([inputName, binding]) => {
+      const boundBox = document.createElement('div');
+      boundBox.className = 'input-box';
+      boundBox.dataset.input = inputName;
+
+      const isPointer = binding.type === 'pointer';
+      boundBox.title = isPointer ? `Bound to: ${binding.value}` : `Direct value: ${binding.value}`;
+
+      let displayName = inputName;
+      // if (binding.type === "pointer") {
+      //   displayName += '-path';
+      // }
+
+      boundBox.innerHTML = isPointer
+        ? `${displayName}<div class="json-pointer">${binding.value}</div>`
+        : `${displayName}<div class="json-pointer">= ${binding.value}</div>`;
+
+      boundBox.addEventListener('click', () => {
+        delete inputBindings[inputName];
+        updateBoundInputsDisplay();
+        restoreInputToAvailable(inputName);
+        render(historyStack[historyStack.length - 1]);
+      });
+
+      boundInputsContainer.appendChild(boundBox);
+    });
+  }
+
+ 
+  function restoreInputToAvailable(inputName) {
+    const inputEl = document.createElement('div');
+    inputEl.className = 'input-box';
+    inputEl.dataset.input = inputName;
+    inputEl.textContent = inputName;
+    makeInputDraggable(inputEl);
+    inputsContainer.appendChild(inputEl);
+  }
+
+  function getBindingsForPointer(pointer) {
+    return Object.entries(inputBindings)
+      .filter(([_, binding]) => binding.type === 'pointer' && binding.value === pointer)
+      .map(([inputName]) => inputName);
+  }
+
+  function updateFunctionInputsDisplay() {
+    inputsContainer.innerHTML = '<strong>Function Inputs</strong>';
+    console.log('Current function:', currentFunction);
+    console.log('Inputs for current function:', functionInputsMap[currentFunction]);
+
+    const inputs = functionInputsMap[currentFunction] || [];
+
+    inputs.forEach(inputName => {
+      if (!inputBindings[inputName]) {
+        const inputEl = document.createElement('div');
+        inputEl.className = 'input-box';
+        inputEl.dataset.input = inputName;
+        inputEl.textContent = inputName;
+        makeInputDraggable(inputEl);
+        inputsContainer.appendChild(inputEl);
+      }
+    });
+  }
+
+  function updatePatchOutput() {
+    prePatchOutput.textContent = JSON.stringify(patchOpList, null, 2);
+  }
+
+
+</script>
+</body>
+</html>
